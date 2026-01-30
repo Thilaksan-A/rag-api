@@ -21,3 +21,23 @@ def query(q: str):
     )
 
     return {"answer": answer["response"]}
+
+
+@app.post("/add")
+def query(text: str):
+    try:
+        import uuid
+        doc_id = str(uuid.uuid4())
+
+        collection.add(documents=[text], ids=[doc_id])
+
+        return {
+            "status":"success",
+            "message": "Content added to knowledge base",
+            "id": doc_id
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": str(e)
+        }
